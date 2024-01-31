@@ -12,6 +12,7 @@ namespace HelloWorld
         static void Main(string[] args)
         {
             DataContextDapper dapper = new DataContextDapper(); 
+            DataContextEF entityFramework = new DataContextEF(); 
 
             DateTime rightNow = dapper.LoadDataSingle<DateTime>("SELECT GETDATE()"); 
             Console.WriteLine(rightNow); 
@@ -29,6 +30,9 @@ namespace HelloWorld
             //Console.WriteLine(myComputer.HasWifi); 
            // Console.WriteLine(myComputer.ReleaseDate); 
 
+           entityFramework.Add(myComputer); 
+           entityFramework.SaveChanges(); 
+
            string sql = @"INSERT INTO TutorialAppSchema.Computer(
                 Motherboard,
                 HasWifi, 
@@ -36,7 +40,8 @@ namespace HelloWorld
                 ReleaseDate, 
                 Price, 
                 VideoCard
-           ) VALUES('" + myComputer.Motherboard 
+           ) VALUES('" + myComputer.ComputerId
+                    + "', + '" + myComputer.HasWifi
                     + "', + '" + myComputer.HasWifi
                     + "', + '" + myComputer.HasLTE
                     + "', + '" + myComputer.ReleaseDate
@@ -50,6 +55,7 @@ namespace HelloWorld
 
             string sqlSelect = @"
             SELECT
+                Computer.ComputerId,
                 Computer.Motherboard,
                 Computer.HasWifi,
                 Computer.HasLTE,
@@ -60,15 +66,21 @@ namespace HelloWorld
 
             IEnumerable<Computer> computers = dapper.LoadData<Computer>(sqlSelect); 
 
-            foreach(Computer singleComputer in computers)
+            IEnumerable<Computer>? computersEf = entityFramework.Computer?.ToList<Computer>(); 
+
+            if(computersEf != null)
             {
-                Console.WriteLine("'" +  myComputer.Motherboard 
-                    + "', + '" + myComputer.HasWifi
-                    + "', + '" + myComputer.HasLTE
-                    + "', + '" + myComputer.ReleaseDate
-                    + "', + '" + myComputer.Price
-                    + "', + '" + myComputer.VideoCard 
-                + "'"); 
+                foreach(Computer singleComputer in computers)
+                {
+                    Console.WriteLine("'" +  myComputer.ComputerId
+                        + "', + '" + myComputer.Motherboard
+                        + "', + '" + myComputer.HasWifi
+                        + "', + '" + myComputer.HasLTE
+                        + "', + '" + myComputer.ReleaseDate
+                        + "', + '" + myComputer.Price
+                        + "', + '" + myComputer.VideoCard 
+                    + "'"); 
+                }
             }
         }
     }
