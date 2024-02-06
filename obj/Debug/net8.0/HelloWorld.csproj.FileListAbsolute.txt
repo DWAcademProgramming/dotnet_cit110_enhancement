@@ -63,3 +63,10 @@
 /Users/david_welsh/dotnet-course-code/HelloWorld/obj/Debug/net8.0/HelloWorld.csproj.AssemblyReference.cache
 /Users/david_welsh/dotnet-course-code/HelloWorld/obj/Debug/net8.0/HelloWorld.sourcelink.json
 /Users/david_welsh/dotnet-course-code/HelloWorld/obj/Debug/net8.0/HelloWorld.csproj.CopyComplete
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.Configuration.FileExtensions.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Json.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Abstractions.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.FileProviders.Physical.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/Microsoft.Extensions.FileSystemGlobbing.dll
+/Users/david_welsh/dotnet-course-code/HelloWorld/bin/Debug/net8.0/appsettings.json

@@ -3,17 +3,26 @@ using Dapper;
 using HelloWorld.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HelloWorld.Data
 {
     public class DataContextEF: DbContext
     {
+
+        private IConfiguration _config; 
+        public DataContextEF (IConfiguration config)
+        {
+            //_config = config; 
+            _config = config; 
+        }
+
         public DbSet<Computer> ? Computer {get; set;}
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if(!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost;Database=DotNetCourseDatabase;TrustServerCertificate=true;Trusted_Connection=false;User Id=sa;Password=SQLConnect1;",
+                options.UseSqlServer(_config.GetConnectionString("DefaultConfiguration"),
                 options => options.EnableRetryOnFailure());
             }
         }

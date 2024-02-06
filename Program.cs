@@ -4,6 +4,8 @@ using Dapper;
 using HelloWorld.Data;
 using HelloWorld.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HelloWorld
 {
@@ -11,8 +13,12 @@ namespace HelloWorld
     {
         static void Main(string[] args)
         {
-            DataContextDapper dapper = new DataContextDapper(); 
-            DataContextEF entityFramework = new DataContextEF(); 
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build(); 
+
+            DataContextDapper dapper = new DataContextDapper(config); 
+            DataContextEF entityFramework = new DataContextEF(config); 
 
             DateTime rightNow = dapper.LoadDataSingle<DateTime>("SELECT GETDATE()"); 
             Console.WriteLine(rightNow); 
@@ -33,21 +39,20 @@ namespace HelloWorld
            entityFramework.Add(myComputer); 
            entityFramework.SaveChanges(); 
 
-           string sql = @"INSERT INTO TutorialAppSchema.Computer(
-                Motherboard,
-                HasWifi, 
-                HasLTE, 
-                ReleaseDate, 
-                Price, 
-                VideoCard
-           ) VALUES('" + myComputer.ComputerId
-                    + "', + '" + myComputer.HasWifi
-                    + "', + '" + myComputer.HasWifi
-                    + "', + '" + myComputer.HasLTE
-                    + "', + '" + myComputer.ReleaseDate
-                    + "', + '" + myComputer.Price
-                    + "', + '" + myComputer.VideoCard 
-            +"')"; 
+         string sql = @"INSERT INTO TutorialAppSchema.Computer (
+            Motherboard,
+            HasWifi,
+            HasLTE,
+            ReleaseDate,
+            Price,
+            Videocard
+            ) VALUES ('" + myComputer.Motherboard
+                     + "','" + myComputer.HasWifi
+                     + "','" + myComputer.HasLTE
+                     + "','" + myComputer.ReleaseDate.ToString("yyyy-MM-dd")
+                     + "','" + myComputer.Price
+                     + "','" + myComputer.VideoCard 
+                +"')";
             Console.WriteLine(sql);
             //int result = dapper.ExecuteSqlWithRowCount(sql); 
             bool result = dapper.ExecuteSql(sql); 
@@ -73,12 +78,12 @@ namespace HelloWorld
                 foreach(Computer singleComputer in computers)
                 {
                     Console.WriteLine("'" +  myComputer.ComputerId
-                        + "', + '" + myComputer.Motherboard
-                        + "', + '" + myComputer.HasWifi
-                        + "', + '" + myComputer.HasLTE
-                        + "', + '" + myComputer.ReleaseDate
-                        + "', + '" + myComputer.Price
-                        + "', + '" + myComputer.VideoCard 
+                        + "', + '" + singleComputer.Motherboard
+                        + "', + '" + singleComputer.HasWifi
+                        + "', + '" + singleComputer.HasLTE
+                        + "', + '" + singleComputer.ReleaseDate
+                        + "', + '" + singleComputer.Price
+                        + "', + '" + singleComputer.VideoCard 
                     + "'"); 
                 }
             }
